@@ -1,54 +1,47 @@
-
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.ext.automap import automap_base
-from sqlalchemy.orm import Session
-from sqlalchemy import create_engine, MetaData, Table, Column, ForeignKey
-
-engine = create_engine("mysql://root@localhost/peeringdb")
-session = Session(engine)
-
-metadata = MetaData()
-metadata.reflect(engine)
 
 
-Base = automap_base()
-Base.prepare(engine, reflect=True)
-# defining the actual tables.  I know it works because they have columns!
-MgmtFacilities = Base.classes.mgmtFacilities
-MgmtPublics = Base.classes.mgmtPublics
-MgmtPublicsFacilities = Base.classes.mgmtPublicsFacilities
-MgmtPublicsIPs = Base.classes.mgmtPublicsIPs
-PeerParticipantsPublics = Base.classes.peerParticipantsPublics
-PeerParticipantsContacts = Base.classes.peerParticipantsContacts
-PeerParticipantsPrivates = Base.classes.peerParticipantsPrivates
-PeerParticipants = Base.classes.peerParticipants
+def connect_to_db(app):
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/peeringdb'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    db.app = app
+    db.init_app(app)
+    db.reflect()
 
-db = SQLAlchemy() #wait, I don't use this?!?!
-# for the above, have to explicitly declare some classes:
+db = SQLAlchemy()
+app = Flask(__name__)
+connect_to_db(app)
 
-class PeerParticipantsPublics(Base):
-    __tablename__ = "peerParticipantsPublics"
-# necessary to extend tables we'd created above!
-    __table_args__ = {'extend_existing': True} 
-# override two of the columns to have foreign keys in them
+
+class PeerParticipants(db.Model):
+    __tablename__ = 'peerParticipants'
+    __table_args__ = {'extend_existing': True}
+
+
+class MgmtPublics(db.Model):
+    __tablename__ = 'mgmtPublics'
+    __table_args__ = {'extend_existing': True}
+
+
+class PeerParticipantsPublics(db.Model):
+    __tablename__ = 'peerParticipantsPublics'
+    __table_args__ = {'extend_existing': True}
+
+    def __repr__(self):
+        return '<PeerParticipantsPublics id=%s local_asn=%s speed=%s>' % (
+            self.id, self.local_asn, self.speed)
+
+    # override two of the columns to have foreign keys in them
     participant_id = db.Column(db.Integer, db.ForeignKey('peerParticipants.id'))
     public_id = db.Column(db.Integer, db.ForeignKey('mgmtPublics.id'))
 
-# further let's define some relationships so that we may "walk"
-    mgmtPublics = db.relationship ("MgmtPublics", backref = db.backref("id"))
-    peerParticipants = db.relationship("PeerParticipants", backref = db.backref("id"))
-
-# finally, let's make a quaint repr: (to-do)    
-#Have to seed the tables as well, right?
+    # further let's define some relationships so that we may "walk"
+    peerParticipants = db.relationship('PeerParticipants', backref=db.backref('participant_id'))
+    mgmtPublics = db.relationship('MgmtPublics', backref=db.backref('public_id'))
 
 
-# db.session.execute(query, dictionary-of-values)
-public_id = 1
-QUERY = "select * from peerParticipantsPublics where public_id=:public_id"
-cursor = session.execute(QUERY, {'public_id': public_id}) #removed the db from db.session.
-results = cursor.first()
-print results
 
-#What about a move fancy query?  And remember, don't have to do joins, since we now have backrefs!
-#for example, start at mgmtPublics table, and get to peerParticipantsPublics
 
+
+# PeerParticipants = Table('PeerParticipants', db.metadata, autoload=True, autoload_with=db.engine)
