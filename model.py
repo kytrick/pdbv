@@ -23,11 +23,12 @@ PeerParticipantsContacts = Base.classes.peerParticipantsContacts
 PeerParticipantsPrivates = Base.classes.peerParticipantsPrivates
 PeerParticipants = Base.classes.peerParticipants
 
+db = SQLAlchemy() #wait, I don't use this?!?!
 # for the above, have to explicitly declare some classes:
 
 class PeerParticipantsPublics(Base):
     __tablename__ = "peerParticipantsPublics"
-# necessary to extend tables we'd created above!    
+# necessary to extend tables we'd created above!
     __table_args__ = {'extend_existing': True} 
 # override two of the columns to have foreign keys in them
     participant_id = db.Column(db.Integer, db.ForeignKey('peerParticipants.id'))
@@ -40,16 +41,14 @@ class PeerParticipantsPublics(Base):
 # finally, let's make a quaint repr: (to-do)    
 #Have to seed the tables as well, right?
 
-#db = SQLAlchemy() #wait, I don't use this?!?!
 
 # db.session.execute(query, dictionary-of-values)
-
+public_id = 1
 QUERY = "select * from peerParticipantsPublics where public_id=:public_id"
 cursor = session.execute(QUERY, {'public_id': public_id}) #removed the db from db.session.
-results = cursor.fetchall()
+results = cursor.first()
 print results
 
 #What about a move fancy query?  And remember, don't have to do joins, since we now have backrefs!
 #for example, start at mgmtPublics table, and get to peerParticipantsPublics
 
-QUERY = 
