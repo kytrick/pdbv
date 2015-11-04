@@ -37,8 +37,8 @@ class PeerParticipantsPublics(db.Model):
     public_id = db.Column(db.Integer, db.ForeignKey('mgmtPublics.id'))
 
     # further let's define some relationships so that we may "walk"
-    peerParticipants = db.relationship('PeerParticipants', backref=db.backref('participant_id'))
-    mgmtPublics = db.relationship('MgmtPublics', backref=db.backref('public_id'))
+    peerParticipants = db.relationship('PeerParticipants', backref=db.backref('peerParticipantsPublics'))
+    mgmtPublics = db.relationship('MgmtPublics', backref=db.backref('peerParticipantsPublics'))
 
 
 
