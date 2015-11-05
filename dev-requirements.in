@@ -2,3 +2,5 @@
 ipython
 ptpython
 flake8
+pipreq
+pip-tools
