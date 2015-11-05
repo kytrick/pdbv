@@ -10,7 +10,7 @@ def connect_to_db(app):
     db.reflect()
 
 db = SQLAlchemy()
-app = Flask(__name__)
+app = Flask('pdbv_model')
 connect_to_db(app)
 
 
@@ -39,3 +39,7 @@ class PeerParticipantsPublics(db.Model):
     # further let's define some relationships so that we may "walk"
     peerParticipants = db.relationship('PeerParticipants', backref=db.backref('peerParticipantsPublics'))
     mgmtPublics = db.relationship('MgmtPublics', backref=db.backref('peerParticipantsPublics'))
+
+if __name__ == "__main__":
+    from server import app
+    connect_to_db(app)
