@@ -39,9 +39,3 @@ class PeerParticipantsPublics(db.Model):
     # further let's define some relationships so that we may "walk"
     peerParticipants = db.relationship('PeerParticipants', backref=db.backref('peerParticipantsPublics'))
     mgmtPublics = db.relationship('MgmtPublics', backref=db.backref('peerParticipantsPublics'))
-
-
-
-
-
-# PeerParticipants = Table('PeerParticipants', db.metadata, autoload=True, autoload_with=db.engine)
