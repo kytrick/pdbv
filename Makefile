@@ -1,4 +1,4 @@
-all: virtualenv pip
+all: pip
 
 virtualenv: .python-version
 
