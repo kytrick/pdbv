@@ -1,4 +1,11 @@
-all: pip
+all: virtualenv pip
+
+virtualenv: .python-version
+
+.python-version:
+	pyenv virtualenv 2.7.10 pdbv
+	pyenv local pdbv
+	pip install -r dev-requirements.txt
 
 pip: requirements.txt dev-requirements.txt
 
