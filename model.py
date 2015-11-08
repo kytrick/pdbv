@@ -18,19 +18,23 @@ class PeerParticipants(db.Model):
     __tablename__ = 'peerParticipants'
     __table_args__ = {'extend_existing': True}
 
+    def __repr__(self):
+        return '<PeerParticipants id=%r asn=%r name=%r info_traffic=%r>' %(
+            self.id, self.asn, self.name, self.info_traffic)
 
 class MgmtPublics(db.Model):
     __tablename__ = 'mgmtPublics'
     __table_args__ = {'extend_existing': True}
 
 
+    def __repr__(self):
+        return '<MgmtPublics id=%r name=%r city=%r country=%r>' %(
+            self.id, self.name, self.city, self.country)
+
+
 class PeerParticipantsPublics(db.Model):
     __tablename__ = 'peerParticipantsPublics'
     __table_args__ = {'extend_existing': True}
-
-    def __repr__(self):
-        return '<PeerParticipantsPublics id=%s local_asn=%s speed=%s>' % (
-            self.id, self.local_asn, self.speed)
 
     # override two of the columns to have foreign keys in them
     participant_id = db.Column(db.Integer, db.ForeignKey('peerParticipants.id'))
@@ -39,6 +43,11 @@ class PeerParticipantsPublics(db.Model):
     # further let's define some relationships so that we may "walk"
     peerParticipants = db.relationship('PeerParticipants', backref=db.backref('peerParticipantsPublics'))
     mgmtPublics = db.relationship('MgmtPublics', backref=db.backref('peerParticipantsPublics'))
+
+
+    def __repr__(self):
+        return '<PeerParticipantsPublics id=%s local_asn=%s speed=%s>' % (
+            self.id, self.local_asn, self.speed)
 
 if __name__ == "__main__":
     from server import app
