@@ -1,0 +1,20 @@
+{
+ "name": "2152",
+ "children": [
+  {
+   "name": "US",
+   "children": [
+    {
+     "name": "CA",
+     "children": [
+      {"foo": "4", "size": 20000},
+      {"name": "23", "size": 10000},
+      {"name": "81", "size": 100},
+      {"name": "7", "size": 20000},
+      {"name": "124", "size": 20000}
+     ]
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,30 @@
+{
+ "name": "flare",
+ "children": [
+  {
+   "name": "thing-a",
+   "children": [
+    {
+     "name": "thing-aa",
+     "children": [
+      {"name": "thing-aaa", "size": 5}
+     ]
+    },
+    {
+     "name": "thing-ab",
+     "children": [
+      {"name": "thing-aba", "size": 2},
+      {"name": "thing-abc", "size": 250}
+
+     ]
+    },
+    {
+     "name": "thing-ac",
+     "children": [
+      {"name": "thing-aca", "size": 500}
+     ]
+    }
+   ]
+  }
+ ]
+}

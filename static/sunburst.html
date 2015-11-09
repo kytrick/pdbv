@@ -15,6 +15,14 @@ form {
   top: 10px;
 }
 
+.node {
+  border: solid 1px white;
+  font: 10px sans-serif;
+  line-height: 12px;
+  position: absolute;
+  text-indent: 2px;
+}
+
 path {
   stroke: #fff;
   fill-rule: evenodd;
@@ -26,7 +34,7 @@ path {
   <label><input type="radio" name="mode" value="size"> Size</label>
   <label><input type="radio" name="mode" value="count" checked> Count</label>
 </form>
-<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="https://d3js.org/d3.v3.min.js"></script>
 <script>
 
 var width = 960,
@@ -60,15 +68,25 @@ var arc = d3.svg.arc()
 // Keep track of the node that is currently being displayed as the root.
 var node;
 
-d3.json("/dynamic/flare.json", function(error, root) {
+d3.json("minimalflare.json", function(error, root) {
   node = root;
-  var path = svg.datum(root).selectAll("path")
+  var arcContainer = svg.datum(root).selectAll("path")
       .data(partition.nodes)
-    .enter().append("path")
+    .enter()
+      .append("g");
+  
+  var path = arcContainer.append("path")
       .attr("d", arc)
       .style("fill", function(d) { return color((d.children ? d : d.parent).name); })
       .on("click", click)
       .each(stash);
+      
+      path.append("title").text( function(d) { return d.name; });
+
+  arcContainer.append("text")
+  // need to figure out how to position (transform) text so it renders inside the element
+      .text( function(d){ return d.name;})
+
 
   d3.selectAll("input").on("change", function change() {
     var value = this.value === "count"
@@ -83,6 +101,7 @@ d3.json("/dynamic/flare.json", function(error, root) {
   });
 
   function click(d) {
+    alert("yo you clicked it");
     node = d;
     path.transition()
       .duration(1000)
