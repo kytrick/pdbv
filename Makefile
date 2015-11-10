@@ -12,7 +12,7 @@ pip: requirements.txt dev-requirements.txt
 requirements.txt: requirements.in
 	pip-compile requirements.in
 
-dev-requirements.txt: dev-requirements.in
+dev-requirements.txt: dev-requirements.in requirements.in
 	pip-compile dev-requirements.in
 
 prod:
