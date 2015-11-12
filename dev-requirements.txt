@@ -22,6 +22,7 @@ markupsafe==0.23
 mccabe==0.3.1             # via flake8
 mysql-python==1.2.5
 path.py==8.1.2            # via pickleshare
+pep257==0.7.0
 pep8==1.5.7               # via flake8
 pexpect==4.0.1            # via ipython
 pickleshare==0.5          # via ipython

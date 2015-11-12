@@ -4,3 +4,4 @@ ptpython
 flake8
 pipreq
 pip-tools
+pep257
