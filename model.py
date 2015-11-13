@@ -1,3 +1,5 @@
+from collections import defaultdict, Counter
+import datetime
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import json
@@ -15,65 +17,76 @@ app = Flask('pdbv_model')
 connect_to_db(app)
 
 
-class PeerParticipants(db.Model):
-    __tablename__ = 'peerParticipants'
+def flare_tree_as_json_for_asn(asn):
+    """ Returned a json representation of an AS tree """
+    continent_count = Counter()
+    country_count = Counter()
+    city_count = Counter()
+    exchanges = defaultdict(lambda: defaultdict(lambda: defaultdict()))
+    results = MgmtPublics.query.filter(PeerParticipants.asn == asn).all()
+    for result in results:
+        continent_count[result.region_continent] += 1
+        country_count[result.country] += 1
+        city_count[result.city] += 1
+        exchanges[
+            result.region_continent][
+            result.country][
+            result.city] = result.serialize(cols=['name'])
+    flare = {"asn": asn}
+    flare["children"] = []
+    print exchanges
+    return json.dumps(flare)
+
+
+class BaseTable(object):
     __table_args__ = {'extend_existing': True}
+
+    def serialize(self, cols_to_use=None):
+        """Returns object data that is serializable"""
+        result = {}
+        for key in self.__table__.columns.keys():
+            value = getattr(self, key)
+            if not cols_to_use or key in cols_to_use:
+                if isinstance(value, datetime.datetime):
+                    result[key] = str(value)
+                else:
+                    result[key] = value
+        return result
+
+
+class PeerParticipants(db.Model, BaseTable):
+    __tablename__ = 'peerParticipants'
 
     def __repr__(self):
         return '<PeerParticipants id=%r asn=%r name=%r info_traffic=%r>' % (
             self.id, self.asn, self.name, self.info_traffic)
 
-    def serialize(self):
-        """Returns object data that is serializable"""
-        return dict([(name, str(getattr(self, name))) for name in self.__table__.columns.keys()])
 
-
-class MgmtPublics(db.Model):
+class MgmtPublics(db.Model, BaseTable):
     __tablename__ = 'mgmtPublics'
-    __table_args__ = {'extend_existing': True}
 
     def __repr__(self):
         return '<MgmtPublics id=%r name=%r city=%r country=%r>' % (
             self.id, self.name, self.city, self.country)
 
-    def serialize(self):
-        """Returns object data that is serializeable"""
-        return dict([(name, str(getattr(self, name))) for name in self.__table__.columns.keys()])
 
-
-class PeerParticipantsPublics(db.Model):
+class PeerParticipantsPublics(db.Model, BaseTable):
     __tablename__ = 'peerParticipantsPublics'
-    __table_args__ = {'extend_existing': True}
 
     # override two of the columns to have foreign keys in them
-    participant_id = db.Column(db.Integer, db.ForeignKey('peerParticipants.id'))
+    participant_id = db.Column(
+        db.Integer, db.ForeignKey('peerParticipants.id'))
     public_id = db.Column(db.Integer, db.ForeignKey('mgmtPublics.id'))
 
     # further let's define some relationships so that we may "walk"
-    peerParticipants = db.relationship('PeerParticipants', backref=db.backref('peerParticipantsPublics'))
-    mgmtPublics = db.relationship('MgmtPublics', backref=db.backref('peerParticipantsPublics'))
+    peerParticipants = db.relationship(
+        'PeerParticipants', backref=db.backref('peerParticipantsPublics'))
+    mgmtPublics = db.relationship(
+        'MgmtPublics', backref=db.backref('peerParticipantsPublics'))
 
     def __repr__(self):
         return '<PeerParticipantsPublics id=%s local_asn=%s speed=%s>' % (
             self.id, self.local_asn, self.speed)
-
-    def serialize(self):
-        """Returns object data that is serializeable"""
-        return dict([(name, str(getattr(self, name))) for name in self.__table__.columns.keys()])
-
-    def flare_tree_as_json_for_as(self, asn):
-        """ Returned a json representation of an AS tree """
-        results = self.query.filter(PeerParticipants.id == asn).all()
-        base = dict()
-        for result in results:
-            # walk down three to find locationt to insert for each result
-            # continent
-            # country
-            # city/exchange
-            # TODO: do analysis on tree based on grouping or other attributeds
-            pass
-
-        return flask.json.dumps(base)
 
 if __name__ == "__main__":
     from server import app
