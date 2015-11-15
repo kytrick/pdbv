@@ -25,13 +25,14 @@ def flare_tree_as_json_for_asn(asn):
     exchanges = defaultdict(lambda: defaultdict(lambda: defaultdict()))
     results = MgmtPublics.query.filter(PeerParticipants.asn == asn).all()
     for result in results:
+        print result.serialize(cols_to_use=['name', 'region_continent', 'country', 'city'])
         continent_count[result.region_continent] += 1
         country_count[result.country] += 1
         city_count[result.city] += 1
         exchanges[
             result.region_continent][
             result.country][
-            result.city] = result.serialize(cols=['name'])
+            result.city] = result.serialize(cols_to_use=['name'])
     flare = {"asn": asn}
     flare["children"] = []
     print exchanges
