@@ -2,3 +2,4 @@ Flask
 Flask_SQLAlchemy
 SQLAlchemy
 mysql-python
+networkx
