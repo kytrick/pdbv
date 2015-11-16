@@ -1,4 +1,4 @@
-all: pip
+all: pip-compile requirements
 
 virtualenv: .python-version
 
@@ -7,7 +7,10 @@ virtualenv: .python-version
 	pyenv local pdbv
 	pip install -r dev-requirements.txt
 
-pip: requirements.txt dev-requirements.txt
+pip-compile:
+	@which pip-compile > /dev/null || pip install pip-tools
+
+requirements: requirements.txt dev-requirements.txt
 
 requirements.txt: requirements.in
 	pip-compile requirements.in
