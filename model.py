@@ -43,7 +43,7 @@ def flare_tree_as_json_for_asn(asn):
         H.add_edge(result.country, result.city)
         H.add_edge(result.city, result.name)
 
-    return json.dumps(json_graph.tree_data(H, root="asn"))
+    return json.dumps(json_graph.tree_data(H, root=asn))
 
 class BaseTable(object):
     __table_args__ = {'extend_existing': True}

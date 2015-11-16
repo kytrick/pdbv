@@ -68,7 +68,7 @@ var arc = d3.svg.arc()
 // Keep track of the node that is currently being displayed as the root.
 var node;
 
-d3.json("minimalflare.json", function(error, root) {
+d3.json("as6939.json", function(error, root) {
   node = root;
   var arcContainer = svg.datum(root).selectAll("path")
       .data(partition.nodes)
@@ -77,15 +77,15 @@ d3.json("minimalflare.json", function(error, root) {
   
   var path = arcContainer.append("path")
       .attr("d", arc)
-      .style("fill", function(d) { return color((d.children ? d : d.parent).name); })
+      .style("fill", function(d) { return color((d.children ? d : d.parent).id); })
       .on("click", click)
       .each(stash);
       
-      path.append("title").text( function(d) { return d.name; });
+      path.append("title").text( function(d) { return d.id; });
 
   arcContainer.append("text")
   // need to figure out how to position (transform) text so it renders inside the element
-      .text( function(d){ return d.name;})
+      .text( function(d){ return d.id;}) //
 
 
   d3.selectAll("input").on("change", function change() {
