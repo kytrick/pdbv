@@ -43,7 +43,22 @@ def flare_tree_as_json_for_asn(asn):
         H.add_edge(result.country, result.city)
         H.add_edge(result.city, result.name)
 
+    # return json.dumps(json_graph.tree_data(H, root=asn))
+    return H
+
+def sunburst_ready_json(asn):
+    H = flare_tree_as_json_for_asn(asn)
     return json.dumps(json_graph.tree_data(H, root=asn))
+
+def tree_ready_json(asn):
+    H = flare_tree_as_json_for_asn(asn)
+    return json.dumps(json_graph.adjacency_data(H))
+
+def otherthing():
+    pass
+
+
+
 
 class BaseTable(object):
     __table_args__ = {'extend_existing': True}

@@ -1,8 +1,8 @@
 """PDBV server"""
-
+from flaregen import *
 from flask import Flask
+from model import connect_to_db
 # from flask_debugtoolbar import DebugToolbarExtension
-from model import connect_to_db, PeerParticipants, MgmtPublics, PeerParticipantsPublics
 
 app = Flask(__name__)
 
@@ -21,3 +21,19 @@ def get_all_mgmtPublics():
     # get all locations for an AS
     results = PeerParticipantsPublics.flare_tree_as_json_for_as(asn)
     # TODO: eturn json to browser
+    return results
+
+
+@app.route('/data/<asn>')
+def get_tree_data(asn):
+    return tree_data_json(asn)
+
+
+@app.route('/sunburst')
+def sunburst():
+    return Flask.render_template('sunburst.html')
+
+
+@app.route('/rrtt')
+def rrtt():
+    return Flask.render_template('rrtt.html')
