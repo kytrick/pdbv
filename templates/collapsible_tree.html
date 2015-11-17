@@ -34,10 +34,6 @@ path.link {
   </head>
   <body>
     <div id="body">
-      <div id="footer">
-        d3.layout.tree
-        <div class="hint">click or option-click to expand or collapse</div>
-      </div>
     </div>
     <script type="text/javascript">
 
@@ -48,14 +44,14 @@ var m = [20, 120, 20, 120],
     root;
 
 var tree = d3.layout.tree()
-    .size([h, w]);
+    .size([2*h, w]);
 
 var diagonal = d3.svg.diagonal()
     .projection(function(d) { return [d.y, d.x]; });
 
 var vis = d3.select("#body").append("svg:svg")
     .attr("width", w + m[1] + m[3])
-    .attr("height", h + m[0] + m[2])
+    .attr("height", 2*h + m[0] + m[2])
   .append("svg:g")
     .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
 
