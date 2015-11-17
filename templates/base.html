@@ -1,55 +1,54 @@
-<html>
-<head>
-    <link rel="stylesheet"
-          href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.css"/>
-    <link rel="stylesheet" href="/static/css/site.css"/>
-</head>
 
-<body>
+<!DOCTYPE html>
+    <html>
+        <head>
+            <title>{% block title %}TITLE GOES HERE{% endblock %}</title>
+        </head>
 
-<div class="navbar navbar-inverse navbar-static-top">
-    <div class="container">
+          <style>
 
-        <div class="navbar-header">
-            <img src="/static/img/ubermelon-logo.png">
-            <a class="navbar-brand" href="/">Ubermelon</a>
-        </div>
+          body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            margin: auto;
+            position: relative;
+            width: 960px;
+          }
 
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="/cart">
-                        <img class="melon-cart"
-                             src="/static/img/watermelon.png">
-                        My Melon Cart
-                    </a>
-                </li>
-                {% if session.get('logged_in_customer_email') %}
-                <li><a href="/logout">Log Out</a></li>
-                {% else %}
-                <li><a href="/login">Log In</a></li>
-                {% endif %}
-            </ul>
-        </div>
+          form {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+          }
 
-    </div>
-</div>
+          .node {
+            border: solid 1px white;
+            font: 10px sans-serif;
+            line-height: 12px;
+            position: absolute;
+            text-indent: 2px;
+          }
 
-<div class="container">
+          path {
+            stroke: #fff;
+            fill-rule: evenodd;
+          }
 
-  <!-- Show flashed messages -->
-  {% with messages = get_flashed_messages() %}
-      {% for message in messages %}
-          <div class="alert alert-warning">{{ message }}</div>
-      {% endfor %}
-  {% endwith %}
+          .node circle {
+            fill: #fff;
+            stroke: steelblue;
+            stroke-width: 1.5px;
+          }
 
-  <!-- This is where the main content goes. -->
-  {% block body %}
-      BODY OF PAGE GOES HERE VIA INHERITANCE
-  {% endblock %}
+          .link {
+            fill: none;
+            stroke: #ccc;
+            stroke-width: 1.5px;
+          }
 
-</div>
+          </style>
 
-</body>
-</html>
+        <body>
+            {% block body %}BODY GOES HERE{% endblock %}
+        </body>
+        <script src="https://d3js.org/d3.v3.min.js"></script>
+    </html>

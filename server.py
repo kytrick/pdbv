@@ -9,19 +9,25 @@ app = Flask(__name__)
 
 # Let's start to build some functions
 
-@app.route('/data/<int:asn>')
+@app.route('/data/tree/<int:asn>')
 def get_tree_data(asn):
     return tree_data_json(asn)
 
 
+@app.route('/data/adjacency/<int:asn>')
+def get_adjacency_data(asn):
+    return adjacency_data_json(asn)
+
+
 @app.route('/sunburst')
 def sunburst():
-    return render_template('sunburst.html')
+    #return 'I love poop!'
+    return render_template('templates/sunburst.html')
 
 
 @app.route('/rrtt')
 def rrtt():
-    return render_template('rrtt.html')
+    return render_template('template/rrtt.html')
 
 
 if __name__ == "__main__":
