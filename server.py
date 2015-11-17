@@ -22,16 +22,21 @@ def get_adjacency_data(asn):
 @app.route('/sunburst')
 def sunburst():
     current_asn = 19165
-    #flare_data = tree_data_json(19165)
-    #return flare_data
     flare_path = "/data/tree/%s" % current_asn
     return render_template('sunburst.html', flare_path=flare_path)
 
 
 @app.route('/rrtt')
 def rrtt():
-    return render_template('rrtt.html')
+    current_asn = 19165
+    flare_path = "/data/tree/%s" % current_asn
+    return render_template('rrtt.html', flare_path=flare_path)
 
+# @app.route('/rrtt')
+# def rrtt():
+#     current_asn = 19165
+#     flare_path = "/data/adjacency/%s" % current_asn
+#     return render_template('rrtt.html')
 
 if __name__ == "__main__":
     app.debug = True
