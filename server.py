@@ -9,12 +9,12 @@ app = Flask(__name__)
 
 # Let's start to build some functions
 
-@app.route('/data/tree/<int:asn>')
+@app.route('/data/tree/<asn>')
 def get_tree_data(asn):
     return tree_data_json(asn)
 
 
-@app.route('/data/adjacency/<int:asn>')
+@app.route('/data/adjacency/<asn>')
 def get_adjacency_data(asn):
     return adjacency_data_json(asn)
 
@@ -26,11 +26,17 @@ def sunburst():
     return render_template('sunburst.html', flare_path=flare_path)
 
 
-@app.route('/rtt')
-def rrtt():
-    current_asn = 19165
-    flare_path = "/data/tree/%s" % current_asn
+@app.route('/rtt/<asn>')
+def rtt(asn):
+    asn = asn
+    flare_path = "/data/tree/%s" % asn
     return render_template('rrtt.html', flare_path=flare_path)
+
+# @app.route('/rtt')
+# def rtt():
+#     current_asn = 19165
+#     flare_path = "/data/tree/%s" % current_asn
+#     return render_template('rrtt.html', flare_path=flare_path)
 
 
 @app.route('/collapsible_tree')

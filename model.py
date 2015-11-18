@@ -88,8 +88,8 @@ class MgmtPublics(db.Model, BaseTable):
     __tablename__ = 'mgmtPublics'
 
     def __repr__(self):
-        return '<MgmtPublics id=%r name=%r city=%r country=%r>' % (
-            self.id, self.name, self.city, self.country)
+        return '<MgmtPublics id=%r region=%r country=%r city=%r name=%r>' % (
+            self.id, self.region_continent, self.country, self.city, self.name)
 
 
 class PeerParticipantsPublics(db.Model, BaseTable):
