@@ -56,34 +56,37 @@ var vis = d3.select("#body").append("svg:svg")
     .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
 
 var current_asn = "{{ current_asn }}";
-var flare_base = "{{ flare_base }}";
-var flare_path = flare_base + current_asn;
 
-d3.json(flare_path, function(json) {
-  root = json;
-  root.x0 = h / 2;
-  root.y0 = 0;
+function treeByAsn(current_asn) {
+    current_asn=current_asn;
+    var flare_base = "{{ flare_base }}";
+    var flare_path = flare_base + current_asn;
 
-  function toggleAll(d) {
-    if (d.children) {
-      d.children.forEach(toggleAll);
-      toggle(d);
-    }
-  }
+    d3.json(flare_path, function(json) {
+      root = json;
+      root.x0 = h / 2;
+      root.y0 = 0;
 
-  // Initialize the display to show a few nodes.
-  root.children.forEach(toggleAll); //toggles continents
-  root.children.forEach(function(d) {toggle(d)}); //toggles countries
-  root.children.forEach(function(d) {d.children.forEach(function(d) {toggle(d)})}); //toggles cities
-  
+      function toggleAll(d) {
+        if (d.children) {
+          d.children.forEach(toggleAll);
+          toggle(d);
+        }
+      }
 
-  // toggle(root.children[1]);
-  // toggle(root.children[1].children[2]);
-  // toggle(root.children[9]);
-  // toggle(root.children[9].children[0]);
+      // Initialize the display to show a few nodes.
+      root.children.forEach(toggleAll); //toggles continents
+      root.children.forEach(function(d) {toggle(d)}); //toggles countries
+      root.children.forEach(function(d) {d.children.forEach(function(d) {toggle(d)})}); //toggles cities
+      update(root);
+    });
+};
 
-  update(root);
-});
+treeByAsn(current_asn);
+
+// These two lines were to prove that the code is modular
+// setTimeout(function() { treeByAsn(current_asn="6939")}, 2000);
+// setTimeout(function() { treeByAsn(current_asn="19165")}, 5000);
 
 function update(source) {
   var duration = d3.event && d3.event.altKey ? 5000 : 500;
