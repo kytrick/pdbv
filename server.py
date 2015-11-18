@@ -42,8 +42,16 @@ def rtt(asn):
 @app.route('/collapsible_tree')
 def collapsible_tree():
     current_asn = 3856
-    flare_path = "/data/tree/%s" % current_asn
-    return render_template('collapsible_tree.html', flare_path=flare_path)
+    flare_base = "/data/tree/"
+    return render_template('collapsible_tree.html',
+                           current_asn=current_asn, flare_base=flare_base)
+
+# @app.route('/collapsible_tree')
+# def collapsible_tree():
+#     current_asn = 3856
+#     flare_path = "/data/tree/%s" % current_asn
+#     return render_template('collapsible_tree.html', flare_path=flare_path)
+
 
 if __name__ == "__main__":
     app.debug = True
