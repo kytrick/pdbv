@@ -3,6 +3,7 @@
     <html>
         <head>
             <title>{% block title %}TITLE GOES HERE{% endblock %}</title>
+            {% block head %}{% endblock %}
         </head>
 
           <style>
@@ -48,6 +49,10 @@
           </style>
 
         <body>
+          <form action="/collapsible_tree">
+          <input type="text" name="search">
+          <input type="submit">
+          </form>
             {% block body %}BODY GOES HERE{% endblock %}
         </body>
         <script src="https://d3js.org/d3.v3.min.js"></script>
