@@ -57,7 +57,9 @@ def tree_ready_json(asn):
 def otherthing():
     pass
 
-
+def asn_search(user_input):
+    QUERY = "select * from peerParticipants where name like user_input or aka like user_input or asn like user_input limit 1;"
+    
 
 
 class BaseTable(object):

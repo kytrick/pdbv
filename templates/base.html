@@ -3,57 +3,26 @@
     <html>
         <head>
             <title>{% block title %}TITLE GOES HERE{% endblock %}</title>
-            {% block head %}{% endblock %}
+            <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+            {% block head %}Head goes here?{% endblock %}
         </head>
-
-          <style>
-
-          body {
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            margin: auto;
-            position: relative;
-            width: 960px;
-          }
-
-          form {
-            position: absolute;
-            right: 10px;
-            top: 10px;
-          }
-
-          .node {
-            border: solid 1px white;
-            font: 10px sans-serif;
-            line-height: 12px;
-            position: absolute;
-            text-indent: 2px;
-          }
-
-          path {
-            stroke: #fff;
-            fill-rule: evenodd;
-          }
-
-          .node circle {
-            fill: #fff;
-            stroke: steelblue;
-            stroke-width: 1.5px;
-          }
-
-          .link {
-            fill: none;
-            stroke: #ccc;
-            stroke-width: 1.5px;
-          }
-
-          </style>
-
+          
         <body>
+
+
+            <link type="text/css" rel="stylesheet" href="static/style.css"/>
+            <script src="https://d3js.org/d3.v3.min.js"></script>
+            <script type="text/javascript" src="https://mbostock.github.io/d3/talk/20111018/d3/d3.js"></script>
+            <script type="text/javascript" src="https://mbostock.github.io/d3/talk/20111018/d3/d3.layout.js"></script> 
+            <style type="text/css"></style>
+
+            <link rel="stylesheet" href="/static/style.css">
+
+
           <form action="/collapsible_tree">
           <input type="text" name="search">
           <input type="submit">
           </form>
             {% block body %}BODY GOES HERE{% endblock %}
         </body>
-        <script src="https://d3js.org/d3.v3.min.js"></script>
     </html>

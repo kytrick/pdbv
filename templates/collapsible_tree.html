@@ -1,41 +1,13 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-    <link type="text/css" rel="stylesheet" href="static/style.css"/>
-<!--     // <script type="text/javascript" src="static/d3.js"></script>
-    // <script type="text/javascript" src="static/d3.layout.js"></script> -->
-
-    <script type="text/javascript" src="https://mbostock.github.io/d3/talk/20111018/d3/d3.js"></script>
-    <script type="text/javascript" src="https://mbostock.github.io/d3/talk/20111018/d3/d3.layout.js"></script> 
-
-
-    <style type="text/css">
-
-
-.node circle {
-  cursor: pointer;
-  fill: #fff;
-  stroke: steelblue;
-  stroke-width: 1.5px;
-}
-
-.node text {
-  font-size: 11px;
-}
-
-path.link {
-  fill: none;
-  stroke: #ccc;
-  stroke-width: 1.5px;
-}
-
-    </style>
-  </head>
-  <body>
+{% extends "base.html" %}
+{% block head %}
+PDBV
+{% endblock %}
+{% block body %}
+  
     <div id="body">
     </div>
     <script type="text/javascript">
+
 
 var m = [20, 120, 20, 120],
     w = 1280 - m[1] - m[3],
@@ -191,5 +163,4 @@ function toggle(d) {
 }
 
     </script>
-  </body>
-</html>
+{% endblock %}
