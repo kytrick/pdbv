@@ -1,7 +1,9 @@
 """PDBV server"""
-from flaregen import *
+
 from flask import Flask, render_template, request, url_for, redirect
 from model import connect_to_db, asn_search
+from flaregen import adjacency_data_json, tree_data_json
+
 # from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)

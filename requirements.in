@@ -1,5 +1,5 @@
 Flask
 Flask_SQLAlchemy
 SQLAlchemy
-mysql-python
+MySQL-python
 networkx
