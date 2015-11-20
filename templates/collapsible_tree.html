@@ -50,6 +50,9 @@ function treeByAsn(current_asn) {
       root.children.forEach(toggleAll); //toggles continents
       root.children.forEach(function(d) {toggle(d)}); //toggles countries
       root.children.forEach(function(d) {d.children.forEach(function(d) {toggle(d)})}); //toggles cities
+
+      root.children.forEach(function(d) {d.children.forEach(function(d) {d.children.forEach(function(d) {toggle(d)})})}); //toggles exchanges
+
       update(root);
     });
 };
