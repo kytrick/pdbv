@@ -1,7 +1,7 @@
 """PDBV server"""
 from flaregen import *
-from flask import Flask, render_template, request
-from model import connect_to_db
+from flask import Flask, render_template, request, url_for, redirect
+from model import connect_to_db, asn_search
 # from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)
@@ -44,10 +44,8 @@ def rtt(asn):
 
 @app.route('/collapsible_tree')
 def collapsible_tree():
-    search = request.args.get("search", 3856)
-    current_asn = search
-    print "CURRENT ASN", current_asn
-    # current_asn = 3856
+    # 
+    current_asn = request.args.get("asn", 3856)
     flare_base = "/data/tree/"
     return render_template('collapsible_tree.html',
                            current_asn=current_asn, flare_base=flare_base)
@@ -60,9 +58,17 @@ def collapsible_tree():
 
 
 @app.route('/search')
-def asn_search(user_input):
-    user_input = user_input
-    return 
+def search_function():
+    # consumes "search" from base.html form
+    # uses search as argument that goes into SQL
+    # gets back an asn
+    # returns a redirect to collapsible tree with that asn
+    search = request.args.get("search")
+    asn = asn_search(search)
+    return redirect(url_for("collapsible_tree", asn=asn))
+
+
+
 
 if __name__ == "__main__":
     app.debug = True

@@ -58,9 +58,11 @@ def otherthing():
     pass
 
 def asn_search(user_input):
-    QUERY = "select * from peerParticipants where name like user_input or aka like user_input or asn like user_input limit 1;"
-    
-
+    print user_input
+    search_results = PeerParticipants.query.filter(
+        (PeerParticipants.asn==user_input) | (PeerParticipants.name.like("%%%s%%" %user_input))).first()
+    probable_asn = search_results.asn
+    return probable_asn
 
 class BaseTable(object):
     __table_args__ = {'extend_existing': True}
