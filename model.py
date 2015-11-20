@@ -2,14 +2,31 @@ from collections import defaultdict, Counter
 import datetime
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+import os
 import json
 import networkx as nx
 from networkx.readwrite import json_graph
 
 
-
 def connect_to_db(app):
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/peeringdb'
+    if 'RDS_HOSTNAME' in os.environ:
+        DB = {
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            }
+    else:
+        DB = {
+            'USER': 'root',
+            'PASSWORD': '',
+            'HOST': 'localhost',
+            }
+
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://%s:%s@%s/peeringdb' % (
+        DB['USER'],
+        DB['PASSWORD'],
+        DB['HOST'],
+        )
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.app = app
     db.init_app(app)
@@ -46,20 +63,23 @@ def flare_tree_as_json_for_asn(asn):
     # return json.dumps(json_graph.tree_data(H, root=asn))
     return H
 
+
 def sunburst_ready_json(asn):
     H = flare_tree_as_json_for_asn(asn)
     return json.dumps(json_graph.tree_data(H, root=asn))
+
 
 def tree_ready_json(asn):
     H = flare_tree_as_json_for_asn(asn)
     return json.dumps(json_graph.adjacency_data(H))
 
+
 def otherthing():
     pass
 
+
 def asn_search(user_input):
     QUERY = "select * from peerParticipants where name like user_input or aka like user_input or asn like user_input limit 1;"
-    
 
 
 class BaseTable(object):
