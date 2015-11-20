@@ -16,8 +16,8 @@ body {
   font-size: 36px;
   font-weight: 300;
   text-shadow: 0 1px 0 #fff;
-  top: 900px;
-  right: 320px;
+  top: 90px;
+  right: 10px;
   text-align: right;
 }
 
@@ -33,8 +33,8 @@ body {
 }
 
 #footer {
-  top: 900px;
-  right: 320px;
+  top: 860px;
+  right: 10px;
   text-align: right;
 }
 
@@ -101,6 +101,13 @@ form {
   position: absolute;
   right: 10px;
   top: 10px;
+}
+
+footer{
+  position: absolute;
+  right: 10px;
+  top: 100px;
+
 }
 
 .node {
