@@ -1,10 +1,11 @@
 """PDBV server"""
 
-from flask import Flask, render_template, request, url_for, redirect
-from model import connect_to_db
 from flaregen import flare_tree_as_json_for_asn, tree_data_json
 from flaregen import adjacency_data_json, sunburst_ready_json
 from flaregen import asn_search, tree_ready_json
+from flask import Flask, render_template, request, url_for, redirect
+from model import connect_to_db
+import re
 
 
 # from flask_debugtoolbar import DebugToolbarExtension
@@ -56,11 +57,16 @@ def search_function():
     # gets back an asn
     # returns a redirect to collapsible tree with that asn
     search = request.args.get("search")
-    asn = asn_search(search)
-    return redirect(url_for("collapsible_tree", asn=asn))
+    p = re.compile("^[0-9]+$")
+    if p.match(search):
+        return redirect(url_for("collapsible_tree", asn=search))
+    else:
+        asn = asn_search(search)
+        return redirect(url_for("collapsible_tree", asn=asn))
 
 
 if __name__ == "__main__":
+    app.config['SQLALCHEMY_ECHO'] = True
     app.debug = True
     connect_to_db(app)
     app.run()

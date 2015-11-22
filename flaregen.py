@@ -52,6 +52,6 @@ def tree_ready_json(asn):
 def asn_search(user_input):
     print user_input
     search_results = PeerParticipants.query.filter(
-        (PeerParticipants.asn==user_input) | (PeerParticipants.name.like("%%%s%%" %user_input))).first()
+        (PeerParticipants.name.like("%%%s%%" % user_input))).first()
     probable_asn = search_results.asn
     return probable_asn
