@@ -13,11 +13,11 @@ pip-compile:
 	@which pip-compile > /dev/null || pip install pip-tools
 
 .PHONY: prod
-prod:
+prod: all
 	pip-sync requirements.txt
 
 .PHONY: dev
-dev:
+dev: all
 	pip-sync dev-requirements.txt
 
 .PHONY: requirements
