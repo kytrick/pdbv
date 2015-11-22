@@ -1,15 +1,26 @@
+# Here's the deal: just type "make" compiles your requirements files.  
+#				   it doesn't add or remove with pip.
+#
+# typing "make dev" gives you your development/testing libraries
+# typing "make prod" deletes the dev things that aren't in prod (make sure you're in your virtual env!)
+#
+# if you want to add a new library, add it to requirements.in or dev-requirements.in or both
+
 all: pip-compile requirements
 
-virtualenv: .python-version
-
-.python-version:
-	pyenv virtualenv 2.7.10 pdbv
-	pyenv local pdbv
-	pip install -r dev-requirements.txt
-
+.PHONY: pip-compile
 pip-compile:
 	@which pip-compile > /dev/null || pip install pip-tools
 
+.PHONY: prod
+prod:
+	pip-sync requirements.txt
+
+.PHONY: dev
+dev:
+	pip-sync dev-requirements.txt
+
+.PHONY: requirements
 requirements: requirements.txt dev-requirements.txt
 
 requirements.txt: requirements.in
@@ -18,8 +29,3 @@ requirements.txt: requirements.in
 dev-requirements.txt: dev-requirements.in requirements.in
 	pip-compile dev-requirements.in
 
-prod:
-	pip-sync requirements.txt
-
-dev:
-	pip-sync dev-requirements.txt
