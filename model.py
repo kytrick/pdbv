@@ -1,11 +1,13 @@
-from collections import defaultdict, Counter
 import datetime
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import os
-import json
-import networkx as nx
-from networkx.readwrite import json_graph
+# import json
+# import networkx as nx
+# from networkx.readwrite import json_graph
+# from flaregen import flare_tree_as_json_for_asn, tree_data_json
+# from flaregen import adjacency_data_json, sunburst_ready_json
+# from flaregen import asn_search, tree_ready_json
 
 
 def connect_to_db(app):
@@ -36,54 +38,6 @@ db = SQLAlchemy()
 app = Flask('pdbv_model')
 connect_to_db(app)
 
-
-def flare_tree_as_json_for_asn(asn):
-    """ Returned a json representation of an AS tree """
-    # continent_count = Counter()
-    # country_count = Counter()
-    # city_count = Counter()
-    # exchanges = defaultdict(lambda: defaultdict(lambda: defaultdict()))
-    # results = MgmtPublics.query.filter(PeerParticipants.asn == asn).all()
-    results = MgmtPublics.query.join(
-        PeerParticipantsPublics).filter(
-        PeerParticipantsPublics.local_asn == asn).all()
-
-    H = nx.DiGraph()   # initialize the tree
-    H.add_node("asn")  # this is the root
-
-    for result in results:  # each result here is an IX
-        H.add_nodes_from([
-            result.region_continent, result.country, result.city, result.name])
-
-        H.add_edge("asn", result.region_continent)
-        H.add_edge(result.region_continent, result.country)
-        H.add_edge(result.country, result.city)
-        H.add_edge(result.city, result.name)
-
-    # return json.dumps(json_graph.tree_data(H, root=asn))
-    return H
-
-
-def sunburst_ready_json(asn):
-    H = flare_tree_as_json_for_asn(asn)
-    return json.dumps(json_graph.tree_data(H, root=asn))
-
-
-def tree_ready_json(asn):
-    H = flare_tree_as_json_for_asn(asn)
-    return json.dumps(json_graph.adjacency_data(H))
-
-
-def otherthing():
-    pass
-
-
-def asn_search(user_input):
-    print user_input
-    search_results = PeerParticipants.query.filter(
-        (PeerParticipants.asn==user_input) | (PeerParticipants.name.like("%%%s%%" %user_input))).first()
-    probable_asn = search_results.asn
-    return probable_asn
 
 class BaseTable(object):
     __table_args__ = {'extend_existing': True}

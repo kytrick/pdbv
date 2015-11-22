@@ -1,18 +1,21 @@
 """PDBV server"""
 
 from flask import Flask, render_template, request, url_for, redirect
-from model import connect_to_db, asn_search
-from flaregen import adjacency_data_json, tree_data_json
+from model import connect_to_db
+from flaregen import flare_tree_as_json_for_asn, tree_data_json
+from flaregen import adjacency_data_json, sunburst_ready_json
+from flaregen import asn_search, tree_ready_json
+
 
 # from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def index():
     return render_template("base.html")
 
-# Let's start to build some functions
 
 @app.route('/data/tree/<asn>')
 def get_tree_data(asn):
@@ -37,26 +40,13 @@ def rtt(asn):
     flare_path = "/data/tree/%s" % asn
     return render_template('rtt.html', flare_path=flare_path)
 
-# @app.route('/rtt')
-# def rtt():
-#     current_asn = 19165
-#     flare_path = "/data/tree/%s" % current_asn
-#     return render_template('rtt.html', flare_path=flare_path)
-
 
 @app.route('/collapsible_tree')
 def collapsible_tree():
-    # 
     current_asn = request.args.get("asn", 3856)
     flare_base = "/data/tree/"
     return render_template('collapsible_tree.html',
                            current_asn=current_asn, flare_base=flare_base)
-
-# @app.route('/collapsible_tree')
-# def collapsible_tree():
-#     current_asn = 3856
-#     flare_path = "/data/tree/%s" % current_asn
-#     return render_template('collapsible_tree.html', flare_path=flare_path)
 
 
 @app.route('/search')
@@ -68,8 +58,6 @@ def search_function():
     search = request.args.get("search")
     asn = asn_search(search)
     return redirect(url_for("collapsible_tree", asn=asn))
-
-
 
 
 if __name__ == "__main__":

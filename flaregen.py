@@ -1,17 +1,14 @@
 import json
 # from model import connect_to_db,
 from model import PeerParticipants, MgmtPublics, PeerParticipantsPublics
+# should I also import BaseTable?
 import networkx as nx
 from networkx.readwrite import json_graph
 
 
 def flare_tree_as_json_for_asn(asn):
     """ Returned a json representation of an AS tree """
-    # continent_count = Counter()
-    # country_count = Counter()
-    # city_count = Counter()
-    # exchanges = defaultdict(lambda: defaultdict(lambda: defaultdict()))
-    # results = MgmtPublics.query.filter(PeerParticipants.asn == asn).all()
+
     results = MgmtPublics.query.join(
         PeerParticipantsPublics).filter(
         PeerParticipantsPublics.local_asn == asn).all()
@@ -31,13 +28,30 @@ def flare_tree_as_json_for_asn(asn):
     # return json.dumps(json_graph.tree_data(H, root=asn))
     return H
 
+
 def tree_data_json(asn):
     H = flare_tree_as_json_for_asn(asn)
     return json.dumps(json_graph.tree_data(H, root=asn))
+
 
 def adjacency_data_json(asn):
     H = flare_tree_as_json_for_asn(asn)
     return json.dumps(json_graph.adjacency_data(H))
 
-def otherthing():
-    pass
+
+def sunburst_ready_json(asn):
+    H = flare_tree_as_json_for_asn(asn)
+    return json.dumps(json_graph.tree_data(H, root=asn))
+
+
+def tree_ready_json(asn):
+    H = flare_tree_as_json_for_asn(asn)
+    return json.dumps(json_graph.adjacency_data(H))
+
+
+def asn_search(user_input):
+    print user_input
+    search_results = PeerParticipants.query.filter(
+        (PeerParticipants.asn==user_input) | (PeerParticipants.name.like("%%%s%%" %user_input))).first()
+    probable_asn = search_results.asn
+    return probable_asn
