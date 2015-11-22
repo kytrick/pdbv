@@ -1,4 +1,7 @@
 #!/bin/bash
+
+# refreshes the working copy of the database 
+
 DB=peeringdb
 brew install mysql
 cd $(dirname $0)
