@@ -33,6 +33,8 @@ def connect_to_db(app):
     db.app = app
     db.init_app(app)
     db.reflect()
+    app.config['SQLALCHEMY_POOL_RECYCLE'] = 300
+    app.config['SQLALCHEMY_POOL_TIMEOUT'] = 10
 
 db = SQLAlchemy()
 app = Flask('pdbv_model')
