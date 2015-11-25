@@ -4,5 +4,3 @@ Flask_SQLAlchemy
 SQLAlchemy
 MySQL-python
 networkx
-numpy
-scipy

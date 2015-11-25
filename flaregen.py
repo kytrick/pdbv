@@ -4,8 +4,6 @@ from model import PeerParticipants, MgmtPublics, PeerParticipantsPublics
 # should I also import BaseTable?
 import networkx as nx
 from networkx.readwrite import json_graph
-import numpy
-import scipy
 
 def flare_tree_as_json_for_asn(asn):
     """ Returned a json representation of an AS tree """
