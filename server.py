@@ -36,13 +36,6 @@ def sunburst():
     return render_template('sunburst.html', flare_path=flare_path)
 
 
-@app.route('/rtt/<asn>')
-def rtt(asn):
-    asn = asn
-    flare_path = "/data/tree/%s" % asn
-    return render_template('rtt.html', flare_path=flare_path)
-
-
 @app.route('/collapsible_tree')
 def collapsible_tree():
     current_asn = request.args.get("asn", 3856)
