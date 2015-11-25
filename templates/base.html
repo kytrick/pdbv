@@ -9,13 +9,22 @@
         </head>
           
         <body>
-            <link type="text/css" rel="stylesheet" href="static/style.css"/>
-            <link rel="stylesheet" href="/static/style.css">
+          <!--This format is used with bower, manging my javascript frameworks -->
+          <!--updating to a more current version of d3, and including some others now that it's easy to add -->
+          <!--bower fetches the latest verion (though I indicate versions in my bower.json) and serves minified -->
+          <script src="{{ url_for('bower.static', filename='jquery/dist/jquery.js') }}"></script>
+          <script src="{{ url_for('bower.static', filename='bootstrap/dist/js/bootstrap.js') }}"></script>
+          <script src="{{ url_for('bower.static', filename='d3/d3.js') }}"></script>
+          <!--I'll be using typeahead for letting the user search either a network as number or name -->
+          <script src="{{ url_for('bower.static', filename='typeahead.js/dist/typeahead.bundle.js') }}"></script>
+          <!--I'll be using handlebars for templating in javascript, similar to how jinja templates for html-->
+          <script src="{{ url_for('bower.static', filename='handlebars/handlebars.js') }}"></script>
+          
+          <!--In addition to using bower for js libraries, can also use it with css -->
+          <link href="{{ url_for('bower.static', filename='bootstrap/dist/css/bootstrap.css') }}" rel="stylesheet" />
 
-            <!-- <script src="https://d3js.org/d3.v3.min.js"></script> -->
-            <script type="text/javascript" src="https://mbostock.github.io/d3/talk/20111018/d3/d3.js"></script>
-            <script type="text/javascript" src="https://mbostock.github.io/d3/talk/20111018/d3/d3.layout.js"></script> 
-            <style type="text/css"></style>
+          <!--The css I had originally made needs to be incorporated in with bower as well-->
+          <link type="text/css" rel="stylesheet" href="/static/style.css">
 
             <form action="/search">
               <!--submits what the user typed in to the /search route

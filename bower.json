@@ -1,0 +1,27 @@
+{
+  "name": "pdbv",
+  "version": "0.0.0",
+  "homepage": "https://github.com/kytrick/pdbv",
+  "authors": [
+    "Kayla Smith <kytrick@gmail.com>"
+  ],
+  "main": "server.py",
+  "moduleType": [
+    "globals"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6",
+    "handlebars": "~4.0.5",
+    "jquery": "~2.1.4",
+    "d3": "~3.5.9",
+    "typeahead.js": "~0.11.1"
+  }
+}

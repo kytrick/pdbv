@@ -4,6 +4,7 @@ from flaregen import flare_tree_as_json_for_asn, tree_data_json
 from flaregen import adjacency_data_json, sunburst_ready_json
 from flaregen import asn_search, tree_ready_json
 from flask import Flask, render_template, request, url_for, redirect
+from flask.ext.bower import Bower
 from model import connect_to_db
 import re
 
@@ -11,7 +12,7 @@ import re
 # from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)
-
+Bower(app) # This provides the /bower url route
 
 @app.route('/')
 def index():

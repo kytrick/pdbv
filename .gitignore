@@ -69,3 +69,6 @@ target/
 
 # direnv
 .envrc
+
+node_modules
+bower_components
