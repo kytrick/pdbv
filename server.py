@@ -1,15 +1,19 @@
 """PDBV server"""
 
-from flaregen import flare_tree_as_json_for_asn, tree_data_json
-from flaregen import adjacency_data_json, sunburst_ready_json
-from flaregen import asn_search, tree_ready_json
+from flaregen import (
+    adjacency_data_json,
+    asn_search,
+    flare_tree_as_json_for_asn,
+    live_search,
+    sunburst_ready_json,
+    tree_data_json,
+    tree_ready_json,
+    )
+
 from flask import Flask, render_template, request, url_for, redirect
 from flask.ext.bower import Bower
 from model import connect_to_db
 import re
-
-
-# from flask_debugtoolbar import DebugToolbarExtension
 
 app = Flask(__name__)
 Bower(app) # This provides the /bower url route
@@ -43,6 +47,9 @@ def collapsible_tree():
     return render_template('collapsible_tree.html',
                            current_asn=current_asn, flare_base=flare_base)
 
+@app.route('/livesearch/<query>')
+def typesearch(query):
+    return '%s' % live_search(query)
 
 @app.route('/search')
 def search_function():
@@ -57,6 +64,7 @@ def search_function():
     else:
         asn = asn_search(search)
         return redirect(url_for("collapsible_tree", asn=asn))
+
 
 
 if __name__ == "__main__":

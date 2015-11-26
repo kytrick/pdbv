@@ -5,6 +5,7 @@ from model import PeerParticipants, MgmtPublics, PeerParticipantsPublics
 import networkx as nx
 from networkx.readwrite import json_graph
 
+
 def flare_tree_as_json_for_asn(asn):
     """ Returned a json representation of an AS tree """
 
@@ -27,6 +28,7 @@ def flare_tree_as_json_for_asn(asn):
     # return json.dumps(json_graph.tree_data(H, root=asn))
     return H
 
+
 def generate_complete_graph():
     results = PeerParticipantsPublics.query.all()
 
@@ -34,11 +36,12 @@ def generate_complete_graph():
     for result in results:
         H.add_nodes_from(["participant_id:" + str(result.participant_id), 
                           "public_id:" + str(result.public_id)])
-        
-        H.add_edge("participant_id:" + str(result.participant_id), 
-                          "public_id:" + str(result.public_id))
-        
+
+        H.add_edge("participant_id:" + str(result.participant_id),
+                   "public_id:" + str(result.public_id))
+
     return H
+
 
 def tree_data_json(asn):
     H = flare_tree_as_json_for_asn(asn)
@@ -58,6 +61,15 @@ def sunburst_ready_json(asn):
 def tree_ready_json(asn):
     H = flare_tree_as_json_for_asn(asn)
     return json.dumps(json_graph.adjacency_data(H))
+
+
+def live_search(query):
+    rows = PeerParticipants.query.filter(
+        PeerParticipants.name.like('%%%s%%' % query)).filter(
+            PeerParticipants.asn > 0).order_by(
+                PeerParticipants.info_traffic.desc()).all()
+    output = [row.serialize(['asn', 'name']) for row in rows]
+    return json.dumps(output)
 
 
 def asn_search(user_input):

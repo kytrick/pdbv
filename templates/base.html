@@ -5,7 +5,7 @@
         <head>
             <title>{% block title %}PDBV{% endblock %}</title>
             <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-            {% block head %}Head goes here?{% endblock %}
+            {% block head %}{% endblock %}
         </head>
           
         <body>
@@ -26,21 +26,76 @@
           <!--The css I had originally made needs to be incorporated in with bower as well-->
           <link type="text/css" rel="stylesheet" href="/static/style.css">
 
-            <form action="/search">
-              <!--submits what the user typed in to the /search route
-              which in turn creates /search?search=netflix -->
-              <input type="text" name="search" placeholder="choose network">
-              <input type="submit">
-            </form>
+          <form action="/search">
+            <!--submits what the user typed in to the /search route
+            which in turn creates /search?search=netflix -->
+            <input type="text" name="search" placeholder="choose network">
+            <input type="submit">
+          </form>
 
-            {% block body %}BODY GOES HERE{% endblock %}
+          <div id="search">
+            <!--this is for the better search.  New "typeahead" class will require
+                some additions to my style.css-->
+            <input class="typeahead" type="text" placeholder="Network Search">
+          </div>
 
-            <div id="footer">
-              pdbv
-              <div class="hint">
-                networks visualized by their exchanges
-              </div>
+          <script>
+          // this variable is food for the typeahead variable to eat
+          var networks = new Bloodhound({
+            datumTokenizer: Bloodhound.tokenizers.obj.whitespace('name'),
+            queryTokenizer: Bloodhound.tokenizers.whitespace,
+            // url points to a json file that contains an array of country names, see
+            // https://github.com/twitter/typeahead.js/blob/gh-pages/data/countries.json
+            remote: {
+              url: '/livesearch/%QUERY',  // /livesearch is our route from server.py
+              wildcard: '%QUERY'
+            }
+          });
+
+          // https://github.com/twitter/typeahead.js/blob/master/doc/bloodhound.md
+          var typeahead = $('#search .typeahead').typeahead(null, {
+            name: 'networks',
+            display: 'name',
+            source: networks,
+            sufficient: 10, // this means 10 characters before it stops searching
+            limit: 10, // this is for the dropdown
+            templates: {
+              {% raw %} //raw so jinja doesn't eat it
+              suggestion: Handlebars.compile('<div class=suggestions>{{name}} <i>asn:{{asn}}</i></div>')
+              {% endraw %}
+              }
+          });
+
+          // function to run for selected event
+          // after the user selects from the dropdown, this function is run, which then makes 
+          // collapsible_tree for their selection's asn
+          var numSelectedHandler = function (eventObject, suggestionObject, suggestionDataset) {
+              window.location = "/collapsible_tree?asn=" + suggestionObject.asn;
+          };
+
+          // watch for typeahead select event (when the user clicks on one of the 10 in the dropdown)
+          // https://github.com/twitter/typeahead.js/blob/master/doc/jquery_typeahead.md#custom-events
+          typeahead.on('typeahead:select', numSelectedHandler);
+          $('input.typeahead').on('typeahead:selected', function(event, selection) {
+          });
+
+          // go to highlighted selection on enter
+          // search for ascii 13 (control-m)
+          $("#search").on('keydown', function(e){
+            if(e.which == 13) {
+              $(".tt-suggestion:first-child", this).trigger('click');
+            }
+          });
+          </script>
+
+          {% block body %}{% endblock %}
+
+          <div id="footer">
+            pdbv
+            <div class="hint">
+              networks visualized by their exchanges
             </div>
+          </div>
         </body>
 
     </html>
