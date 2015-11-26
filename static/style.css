@@ -1,3 +1,4 @@
+
 body {
   /*overflow: hidden;*/
   margin: 0;
@@ -5,37 +6,22 @@ body {
   font-family: "Helvetica Neue", Helvetica;
 }
 
-#chart, #header, #footer {
-  position: absolute;
-  top: 0;
-}
-
-#header, #footer {
-  z-index: 1;
+#footer {
   display: block;
   font-size: 36px;
   font-weight: 300;
   text-shadow: 0 1px 0 #fff;
-  top: 90px;
-  right: 10px;
+  top: 8px;
+  left: 100px;
   text-align: right;
 }
 
-#header.inverted, #footer.inverted {
-  color: #fff;
-  text-shadow: 0 1px 4px #000;
-}
-
-#header {
-  top: 80px;
-  left: 140px;
-  width: 1000px;
-}
-
-#footer {
-  top: 860px;
-  right: 10px;
-  text-align: right;
+.hint {
+  position: absolute;
+  right: 0;
+  width: 1280px;
+  font-size: 12px;
+  color: #999;
 }
 
 rect {
@@ -82,14 +68,46 @@ a:hover {
   color: #666;
 }
 
-.hint {
+
+
+
+.node {
+  border: solid 1px white;
+  font: 10px sans-serif;
+  line-height: 12px;
   position: absolute;
-  right: 0;
-  width: 1280px;
-  font-size: 12px;
-  color: #999;
+  text-indent: 2px;
 }
 
+path {
+  stroke: #fff;
+  fill-rule: evenodd;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+ 
+.node circle {
+  cursor: pointer;
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.node text {
+  font-size: 11px;
+}
+
+path.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+
+/* below is the typeahead style for the search box and pulldown */
 .typeahead,
 .tt-query,
 .tt-hint {
@@ -159,66 +177,3 @@ a:hover {
 .tt-suggestion p {
   margin: 0;
 }
-body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  margin: auto;
-  position: relative;
-  width: 960px;
-}
-
-form {
-  position: absolute;
-  right: 10px;
-  top: 10px;
-}
-
-footer{
-  position: absolute;
-  right: 10px;
-  top: 100px;
-
-}
-
-.node {
-  border: solid 1px white;
-  font: 10px sans-serif;
-  line-height: 12px;
-  position: absolute;
-  text-indent: 2px;
-}
-
-path {
-  stroke: #fff;
-  fill-rule: evenodd;
-}
-
-.node circle {
-  fill: #fff;
-  stroke: steelblue;
-  stroke-width: 1.5px;
-}
-
-.link {
-  fill: none;
-  stroke: #ccc;
-  stroke-width: 1.5px;
-}
-
- 
-.node circle {
-  cursor: pointer;
-  fill: #fff;
-  stroke: steelblue;
-  stroke-width: 1.5px;
-}
-
-.node text {
-  font-size: 11px;
-}
-
-path.link {
-  fill: none;
-  stroke: #ccc;
-  stroke-width: 1.5px;
-}
-
