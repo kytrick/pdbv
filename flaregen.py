@@ -70,11 +70,3 @@ def live_search(query):
                 PeerParticipants.info_traffic.desc()).all()
     output = [row.serialize(['asn', 'name']) for row in rows]
     return json.dumps(output)
-
-
-def asn_search(user_input):
-    print user_input
-    search_results = PeerParticipants.query.filter(
-        (PeerParticipants.name.like("%%%s%%" % user_input))).first()
-    probable_asn = search_results.asn
-    return probable_asn

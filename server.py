@@ -2,7 +2,6 @@
 
 from flaregen import (
     adjacency_data_json,
-    asn_search,
     flare_tree_as_json_for_asn,
     live_search,
     sunburst_ready_json,
