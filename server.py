@@ -22,6 +22,11 @@ def index():
     return render_template("base.html")
 
 
+@app.route('/about')
+def about():
+    return render_template("about.html")
+
+
 @app.route('/data/tree/<asn>')
 def get_tree_data(asn):
     return tree_data_json(asn)

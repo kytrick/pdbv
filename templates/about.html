@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block head %}
+{% endblock %}
+
+{% block body %}
+
+<div class="container">
+<dl>
+<dt>Overview</dt>
+<dd><p class="text-muted">
+PDBV is a project written for Hackbright Academy with the intention to learn how to use web app development tools.  Peering Database Viewer (pdbv) creates a graphical representation of all the public peering exchanges that a given network is connected to.   Visualization is done with d3.js using a collapsible cartesian tree to display hierarchical geographical information.  When fully expanded it's possible to see which public exchanges a network is present at.
+</p>
+</dd>
+
+<dt>Data</dt>
+<dd><p class="text-muted">
+As starting material I used the peeringdb.com nightly mysql dumps.  This database is reflected into and extended by SQLAlchemy.  The extensions are to allow for custom reprs and relationships. The db priming can be seen in the /dump directory and the relationships in model.py
+</p>
+</dd>
+
+<dt>Graphing</dt>
+<dd><p class="text-muted">
+I used the python NetworkX library to build a hierarchical geographical tree out of the public exchanges for each peering network. The graph data is subsequently serialized into json format for use by the front end.  This happens in flaregen.py 
+</p>
+</dd>
+
+<dt>Searching</dt>
+<dd><p class="text-muted">
+Searching is done through a typeahead/handlebars interface, and is found in base.html
+</p>
+</dd>
+
+<dt>Visualization</dt>
+<dd><p class="text-muted">
+Visualizations are modified from existing d3 templates.  My version is collapsible_tree.html
+</p>
+</dd>
+
+<dt>Infrastructure</dt>
+<dd><p class="text-muted">
+
+<p class="text-muted">
+<i>Makefile</i>:
+NPM --> Bower --> bootstrap/d3/handlebars/jquery/typeahead.js
+</p>
+
+<p class="text-muted">
+<i>Deployment</i>:
+AWS Elastic Beanstalk
+</p>
+
+</dd>
+
+</dl>
+</div>
+
+
+
+
+
+
+{% endblock%}
