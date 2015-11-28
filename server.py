@@ -51,9 +51,13 @@ def collapsible_tree():
 def typesearch(query):
     return '%s' % live_search(query)
 
-
 if __name__ == "__main__":
     app.config['SQLALCHEMY_ECHO'] = True
     app.debug = True
     connect_to_db(app)
     app.run()
+else:
+    import logging
+    logger = logging.getLogger(__name__)
+    FORMAT = "[%(asctime)s %(levelname)s %(name)s:%(module)s %(filename)s:%(lineno)s - %(funcName)s()] %(message)s"
+    logging.basicConfig(format=FORMAT, level=logging.DEBUG)
