@@ -22,6 +22,7 @@
     "handlebars": "~4.0.5",
     "jquery": "~2.1.4",
     "d3": "~3.5.9",
-    "typeahead.js": "corejs-typeahead#master"
+    "typeahead.js": "corejs-typeahead#master",
+    "d3-tip": "~0.6.7"
   }
 }
