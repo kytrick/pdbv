@@ -29,6 +29,20 @@ var vis = d3.select("#body").append("svg:svg")
 
 var current_asn = "{{ current_asn }}";
 
+
+
+var tip = d3.tip()
+  .attr('class', 'd3-tip')
+  .offset([-10, 0])
+  .html(function(d) { 
+    if (!d.children) {
+    return "<strong>Exchange Information:</strong> <span style='color:steelblue'>" + d.id + "</span>";
+  }});
+
+
+vis.call(tip);
+
+
 function treeByAsn(current_asn) {
     current_asn=current_asn;
     var flare_base = "{{ flare_base }}";
@@ -80,7 +94,10 @@ function update(source) {
   var nodeEnter = node.enter().append("svg:g")
       .attr("class", "node")
       .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
-      .on("click", function(d) { toggle(d); update(d); });
+      .on("click", function(d) { toggle(d); update(d); })
+      //.on('mouseover', function(d) {var nodeSelection = d3.select(this); nodeSelection.select("text"); });
+      .on('mouseover', tip.show)
+      .on('mouseout', tip.hide);
 
   nodeEnter.append("svg:circle")
       .attr("r", 1e-6)
