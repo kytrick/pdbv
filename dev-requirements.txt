@@ -12,6 +12,7 @@ first==2.0.1              # via pip-tools
 flake8==2.5.0
 flask-bower==1.2.1
 flask-sqlalchemy==2.1
+flask-sslify==0.1.5
 flask==0.10.1
 gnureadline==6.3.3        # via ipython
 ipython-genutils==0.1.0   # via traitlets

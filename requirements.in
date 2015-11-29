@@ -1,6 +1,7 @@
 Flask
 Flask-Bower
 Flask_SQLAlchemy
+Flask_SSLify
 SQLAlchemy
 MySQL-python
 networkx
