@@ -29,15 +29,15 @@ var vis = d3.select("#body").append("svg:svg")
 
 var current_asn = "{{ current_asn }}";
 
-
+// var exchanges = vis.select("[depth=4]")
 
 var tip = d3.tip()
-  .attr('class', 'd3-tip')
-  .offset([-10, 0])
-  .html(function(d) { 
-    if (!d.children) {
-    return "<strong>Exchange Information:</strong> <span style='color:steelblue'>" + d.id + "</span>";
-  }});
+    .attr('class', 'd3-tip')
+    .offset([-10, 0])
+    .html(function(d) {
+        return "<strong>Exchange Information:</strong> <span style='color:steelblue'>" + d.id + "</span>";
+      });
+
 
 
 vis.call(tip);
@@ -96,8 +96,8 @@ function update(source) {
       .attr("transform", function(d) { return "translate(" + source.y0 + "," + source.x0 + ")"; })
       .on("click", function(d) { toggle(d); update(d); })
       //.on('mouseover', function(d) {var nodeSelection = d3.select(this); nodeSelection.select("text"); });
-      .on('mouseover', tip.show)
-      .on('mouseout', tip.hide);
+      .on('mouseover', function(d, i) {if (d.depth == 4) { tip.show(d, i) }})
+      .on('mouseout', function(d, i) {if (d.depth == 4) { tip.hide(d, i) }})
 
   nodeEnter.append("svg:circle")
       .attr("r", 1e-6)
