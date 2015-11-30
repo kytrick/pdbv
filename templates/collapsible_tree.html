@@ -49,7 +49,6 @@ function treeByAsn(current_asn) {
     var flare_path = flare_base + current_asn;
 
     d3.json(flare_path, function(json) {
-      console.log(root)
       if (json !== null) {
         root = json;
         root.x0 = h / 2;
