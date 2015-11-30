@@ -49,25 +49,29 @@ function treeByAsn(current_asn) {
     var flare_path = flare_base + current_asn;
 
     d3.json(flare_path, function(json) {
-      root = json;
-      root.x0 = h / 2;
-      root.y0 = 0;
+      console.log(root)
+      if (json !== null) {
+        root = json;
+        root.x0 = h / 2;
+        root.y0 = 0;
 
-      function toggleAll(d) {
-        if (d.children) {
-          d.children.forEach(toggleAll);
-          toggle(d);
+        function toggleAll(d) {
+          if (d.children) {
+            d.children.forEach(toggleAll);
+            toggle(d);
+          }
         }
+      
+
+        // Initialize the display to show a few nodes.
+        root.children.forEach(toggleAll); //toggles continents
+        root.children.forEach(function(d) {toggle(d)}); //toggles countries
+        root.children.forEach(function(d) {d.children.forEach(function(d) {toggle(d)})}); //toggles cities
+
+        root.children.forEach(function(d) {d.children.forEach(function(d) {d.children.forEach(function(d) {toggle(d)})})}); //toggles exchanges
+
+        update(root);
       }
-
-      // Initialize the display to show a few nodes.
-      root.children.forEach(toggleAll); //toggles continents
-      root.children.forEach(function(d) {toggle(d)}); //toggles countries
-      root.children.forEach(function(d) {d.children.forEach(function(d) {toggle(d)})}); //toggles cities
-
-      root.children.forEach(function(d) {d.children.forEach(function(d) {d.children.forEach(function(d) {toggle(d)})})}); //toggles exchanges
-
-      update(root);
     });
 };
 
