@@ -14,42 +14,67 @@ PDBV is a project written for Hackbright Academy with the intention to learn how
 
 <dt>Data</dt>
 <dd><p class="text-muted">
-As starting material I used the peeringdb.com nightly mysql dumps.  This database is reflected into and extended by SQLAlchemy.  The extensions are to allow for custom reprs and relationships. The db priming can be seen in the /dump directory and the relationships in model.py
+As starting material I used the peeringdb.com nightly mysql dump.  This database is reflected into and extended by SQLAlchemy. The extensions are to allow for custom reprs and relationships. The db priming can be seen in the /dump directory and the relationships in model.py
 </p>
 </dd>
 
 <dt>Graphing</dt>
 <dd><p class="text-muted">
-I used the python NetworkX library to build a hierarchical geographical tree out of the public exchanges for each peering network. The graph data is subsequently serialized into json format for use by the front end.  This happens in flaregen.py 
+I used the python NetworkX library to build a hierarchical geographical tree out of the public exchanges for each peering network. The graph data is subsequently serialized into json format for use by the front end. This happens in flaregen.py 
 </p>
 </dd>
 
 <dt>Searching</dt>
 <dd><p class="text-muted">
-Searching is done through a typeahead/handlebars interface, and is found in base.html
+Searching is done through a typeahead/handlebars interface, and is found in base.html.  Search is against either a network name or a network autonomous system number.
 </p>
 </dd>
 
 <dt>Visualization</dt>
 <dd><p class="text-muted">
-Visualizations are modified from existing d3 templates.  My version is collapsible_tree.html
+Visualizations are inspired by existing d3 templates and adapted to fit this project.  My frankenstein is collapsible_tree.html
+I borrowed from: <a href = "https://mbostock.github.io/d3/talk/20111018/tree.html">mbostock </a> and <a href="http://bl.ocks.org/Caged/6476579">caged</a>.
 </p>
 </dd>
 
 <dt>Infrastructure</dt>
 <dd><p class="text-muted">
-
-<p class="text-muted">
-<i>Makefile</i>:
-NPM --> Bower --> bootstrap/d3/handlebars/jquery/typeahead.js
+<i>Environment</i> Development and Production are managed of with make, which uses pip-tools for python libraries and npm/bower for javascript libraries. See Makefile, requirements.in, requirements-dev.in.
 </p>
 
 <p class="text-muted">
 <i>Deployment</i>:
-AWS Elastic Beanstalk
+Peering Database Viewer lives on AWS Elastic Beanstalk.  
+DNS uses AWS Route53 pointing at Google domains (my registrar).
+CA is Comodo.
 </p>
-
 </dd>
+
+<dt>Author</dt>
+<dd><p class="text-muted">
+Kayla Smith is a student at Hackbright Academy and this is her first webapp.   
+</p>
+</dd>
+
+<dt>Acknowledgements</dt>
+<dd><p class="text-muted">
+Thank you to the instructors at Hackbright Academy for creating a safe working environment where engagement, learning, ideas, successes and failures could hold hands, iterating on ring around the rosies.
+<p>
+<p class = "text-muted">
+A special accolade is extended toward Joseph Gross, without whose guidance, patience and complection this project would have fallen on its knees and stayed there.
+</p>
+</dd>
+
+<dt>Future Plans</dt>
+<dd><p class="text-muted">
+<ul class="text-muted">
+<li> Tooltip more informative
+<li> Show which exchanges two networks have in common
+<li> 
+</ul>
+</p>
+</dd>
+
 
 </dl>
 </div>
