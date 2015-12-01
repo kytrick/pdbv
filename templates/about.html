@@ -14,42 +14,63 @@ PDBV is a project written for Hackbright Academy with the intention to learn how
 
 <dt>Data</dt>
 <dd><p class="text-muted">
-As starting material I used the peeringdb.com nightly mysql dumps.  This database is reflected into and extended by SQLAlchemy.  The extensions are to allow for custom reprs and relationships. The db priming can be seen in the /dump directory and the relationships in model.py
+As starting material I used the peeringdb.com nightly mysql dump.  This database is reflected into and extended by SQLAlchemy. The extensions are to allow for custom reprs and relationships. The db fetching/updating/priming can be seen in the /dump directory and the relationships in model.py
 </p>
 </dd>
 
 <dt>Graphing</dt>
 <dd><p class="text-muted">
-I used the python NetworkX library to build a hierarchical geographical tree out of the public exchanges for each peering network. The graph data is subsequently serialized into json format for use by the front end.  This happens in flaregen.py 
+I used the python NetworkX library to build a hierarchical geographical tree out of the public exchanges for each peering network. The graph data is subsequently serialized into json format for use by the front end. This happens in flaregen.py 
 </p>
 </dd>
 
 <dt>Searching</dt>
 <dd><p class="text-muted">
-Searching is done through a typeahead/handlebars interface, and is found in base.html
+Search is done live, while typing, through a typeahead.js interface with a little bit of handlebars, and is found in base.html.  Search is against either a network name or a network autonomous system number.
 </p>
 </dd>
 
 <dt>Visualization</dt>
 <dd><p class="text-muted">
-Visualizations are modified from existing d3 templates.  My version is collapsible_tree.html
+Visualizations are inspired by existing d3 templates and adapted to fit this project.  My frankenstein is collapsible_tree.html
+I borrowed from: <a href = "https://mbostock.github.io/d3/talk/20111018/tree.html">mbostock </a> and <a href="http://bl.ocks.org/Caged/6476579">caged</a>.
 </p>
 </dd>
 
 <dt>Infrastructure</dt>
 <dd><p class="text-muted">
+<strong>Python Environment:</strong> Development and Production python modules are managed with pip-tools and autoamted with a Makefile. Production modules are the minimal subset needed for the service, with additional modules added to ease development. pip-compile and pip-sync allow for sane and easy management of top-level python modules as well as automaticlaly freezing all dependencies -- without resorting to 'pip-freeze'. See Makefile, requirements.in, requirements-dev.in.</p>
 
 <p class="text-muted">
-<i>Makefile</i>:
-NPM --> Bower --> bootstrap/d3/handlebars/jquery/typeahead.js
+<strong>Javascript/CSS:</strong> npm/bower are used for management of Javascript/CSS dependencies with flask-bower used to for versioning. See package.json, bower.json.
 </p>
 
 <p class="text-muted">
-<i>Deployment</i>:
-AWS Elastic Beanstalk
+<strong>Deployment</strong>:
+Peering Database Viewer lives on AWS Elastic Beanstalk with RDS/mysql. RDS database is pre-populated with mysqldump at startup via .ebextensions. Code is pushed to production with eb command line tool. DNS uses AWS Route53 pointing at Google domains (my registrar). CA for https is Comodo.
 </p>
-
 </dd>
+
+<dt>Author</dt>
+<dd><p class="text-muted">
+Kayla Smith is a student at Hackbright Academy and this is her first webapp.   
+</p>
+</dd>
+
+
+<dt>Future Plans</dt>
+<dd><p class="text-muted">
+<ul class="text-muted">
+<li> Tests
+<li> Provide more information via Tooltips
+<li> Network/exchange commonality visualization
+<li> Geolocation of exchanges
+<li> Automatic updates of peering data
+<li> Refactor for flask-script
+</ul>
+</p>
+</dd>
+
 
 </dl>
 </div>

@@ -11,13 +11,13 @@ from flaregen import (
 
 from flask import Flask, render_template, request, url_for, redirect
 from flask.ext.bower import Bower
-from flask_sslify import SSLify
+#from flask_sslify import SSLify
 
 from model import connect_to_db
 
 app = Flask(__name__)
 Bower(app)  # This provides the /bower url route
-sslify = SSLify(app, age=300) # This attaches SSLify to the app
+#sslify = SSLify(app, age=300) # This attaches SSLify to the app
 #sslify = SSLify(app, permanent=True) 
 
 

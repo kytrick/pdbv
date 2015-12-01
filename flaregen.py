@@ -34,18 +34,21 @@ def generate_complete_graph():
 
     H = nx.Graph()
     for result in results:
-        H.add_nodes_from(["participant_id:" + str(result.participant_id), 
+        H.add_nodes_from(["participant_id:" + str(result.participant_id),
                           "public_id:" + str(result.public_id)])
 
         H.add_edge("participant_id:" + str(result.participant_id),
                    "public_id:" + str(result.public_id))
-
     return H
 
 
 def tree_data_json(asn):
     H = flare_tree_as_json_for_asn(asn)
-    return json.dumps(json_graph.tree_data(H, root=asn))
+    try:
+        json_tree = json_graph.tree_data(H, root=asn)
+        return json.dumps(json_tree)
+    except TypeError:
+        return json.dumps({})
 
 
 def adjacency_data_json():
