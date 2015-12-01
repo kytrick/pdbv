@@ -29,8 +29,6 @@ var vis = d3.select("#body").append("svg:svg")
 
 var current_asn = "{{ current_asn }}";
 
-// var exchanges = vis.select("[depth=4]")
-
 var tip = d3.tip()
     .attr('class', 'd3-tip')
     .offset([-10, 0])
@@ -38,10 +36,7 @@ var tip = d3.tip()
         return "<strong>Exchange Information:</strong> <span style='color:steelblue'>" + d.id + "</span>";
       });
 
-
-
 vis.call(tip);
-
 
 function treeByAsn(current_asn) {
     current_asn=current_asn;
@@ -64,7 +59,6 @@ function treeByAsn(current_asn) {
       root.children.forEach(toggleAll); //toggles continents
       root.children.forEach(function(d) {toggle(d)}); //toggles countries
       root.children.forEach(function(d) {d.children.forEach(function(d) {toggle(d)})}); //toggles cities
-
       root.children.forEach(function(d) {d.children.forEach(function(d) {d.children.forEach(function(d) {toggle(d)})})}); //toggles exchanges
 
       update(root);
