@@ -5,9 +5,17 @@
 #    pip-compile dev-requirements.in
 #
 appnope==0.1.0            # via ipython
+awsebcli==3.6.1
+blessed==1.9.5            # via awsebcli
+botocore==1.3.9           # via awsebcli
+cement==2.4               # via awsebcli
 click==6.2                # via pip-tools
+colorama==0.3.3           # via awsebcli
 decorator==4.0.4
-docopt==0.6.2             # via ptpython
+docker-py==1.1.0          # via awsebcli
+dockerpty==0.3.4          # via awsebcli
+docopt==0.6.2             # via awsebcli, ptpython
+docutils==0.12            # via botocore
 first==2.0.1              # via pip-tools
 flake8==2.5.0
 flask-bower==1.2.1
@@ -20,11 +28,13 @@ ipython==4.0.1
 itsdangerous==0.24
 jedi==0.9.0               # via ptpython
 jinja2==2.8
+jmespath==0.9.0           # via botocore
 markupsafe==0.23
 mccabe==0.3.1             # via flake8
 mysql-python==1.2.5
 networkx==1.10
 path.py==8.1.2            # via pickleshare
+pathspec==0.3.3           # via awsebcli
 pep257==0.7.0
 pep8==1.5.7               # via flake8
 pexpect==4.0.1            # via ipython
@@ -36,9 +46,14 @@ ptpython==0.25
 ptyprocess==0.5           # via pexpect
 pyflakes==1.0.0           # via flake8
 pygments==2.0.2           # via prompt-toolkit
+python-dateutil==2.4.2    # via botocore
+pyyaml==3.11              # via awsebcli
+requests==2.6.2           # via awsebcli, docker-py
 simplegeneric==0.8.1      # via ipython
-six==1.10.0               # via pip-tools, prompt-toolkit
+six==1.10.0               # via docker-py, dockerpty, pip-tools, prompt-toolkit, python-dateutil, websocket-client
 sqlalchemy==1.0.9
+texttable==0.8.4          # via awsebcli
 traitlets==4.0.0          # via ipython
-wcwidth==0.1.5            # via prompt-toolkit
+wcwidth==0.1.5            # via blessed, prompt-toolkit
+websocket-client==0.34.0  # via awsebcli, docker-py
 werkzeug==0.11.2
