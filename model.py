@@ -36,7 +36,13 @@ def connect_to_db(app):
     app.config['SQLALCHEMY_POOL_RECYCLE'] = 300
     app.config['SQLALCHEMY_POOL_TIMEOUT'] = 10
 
-db = SQLAlchemy()
+# enable autocommit to dsiable implicit transactions
+# http://docs.sqlalchemy.org/en/rel_0_8/orm/session.html#autocommit-mode
+db = SQLAlchemy(session_options={
+    'autocommit': True,
+    'autoflush': False,
+    'expire_on_commit': False
+    })
 app = Flask('pdbv_model')
 connect_to_db(app)
 
